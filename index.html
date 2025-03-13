@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding JS with Session in Client Side</title>
+</head>
+<body>
+    <h1>Apa itu object local storage</h1>
+    <h2>Yang berfungsi sebagai client side session</h2>
+    <hr/>
+    Namamu = <span id="nama">Akan diganti dengan isi variable name</span>
+    <hr/>
+    Input nama <input  id="inputNama" /><button id="btnSimpanNama">Simpan</button>
+    <hr/>
+    <h1>Mengenal OOP</h1>
+    <h2>Cara programmer memecahkan permasalahan ke dalam class-class yang terdari dari fungsi dan data</h2>
+    <hr/>
+    Input nama <input id="inputNamaArray"/><br/>
+    Input sex <input id="inputSexArray"/><br/>
+    <button id="btnSimpanNamaArray">Simpan</button>
+
+    <hr/>
+    <h1>Daftar Manusia</h1>
+    <div>
+        <ol id="listDaftarManusia">
+        </ol>
+    </div>
+
+
+
+    <script>
+        let nama = localStorage.getItem("nama") || "Untitle";
+        let daftarNama = [];
+
+        let daftarManusia = [];
+
+        class Manusia{
+            constructor(nama, sex){
+                this.nama = nama;
+                this.sex = sex;
+            }
+
+            render(){
+                let li = document.createElement("li");
+                li.innerHTML = this.nama + " - " + this.sex
+                document.getElementById("listDaftarManusia").appendChild(li);
+            }
+        }
+
+        function setNama(nilaiNama){
+            document.getElementById("nama").innerHTML = nilaiNama;
+            localStorage.setItem("nama", nilaiNama);
+        }
+
+        setNama(nama);
+
+        document.getElementById("btnSimpanNama").addEventListener("click", function(){
+            console.log("Tombol simpan di klik");
+            nama = document.getElementById("inputNama").value;
+            setNama(nama);
+        });
+
+
+
+        function saveToLocalStorage(daftarManusia){
+            localStorage.setItem("daftarManusia", JSON.stringify(daftarManusia));
+        }
+
+
+        // array 
+        document.getElementById("btnSimpanNamaArray").addEventListener("click", function(){
+            let inputNamaArray = document.getElementById("inputNamaArray").value;
+            let inputSexArray = document.getElementById("inputSexArray").value;
+
+            let manusia = new Manusia(inputNamaArray, inputSexArray);
+            manusia.render();
+            // daftarNama.push(manusia);
+            daftarManusia.push(manusia);
+
+            document.getElementById("inputNamaArray").value = "";
+            document.getElementById("inputSexArray").value = "";
+            // console.log(daftarNama);
+            console.log(daftarManusia);
+            saveToLocalStorage(daftarManusia);
+        });
+
+
+
+
+
+    </script>
+
+    
+</body>
+</html>
